@@ -1,5 +1,6 @@
 <style global>
     /* Hier kommen meine globalen Styles */
+    
     html {
       scroll-behavior: smooth;
     }
