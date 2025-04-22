@@ -1,0 +1,16 @@
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Grundlegende Reset */
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    line-height: 1.6;
+  }
+  
+  /* Sections Abstand */
+  section {
+    padding: 80px 20px;
+  }
