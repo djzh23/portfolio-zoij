@@ -11,6 +11,10 @@
   let activeSection = 'start'; // Aktive Sektion für Navigation
   let isMenuOpen = false;
   let isAtBottom = false;
+  let expandedCards = {
+    myit: false,
+    me2be: false
+  };
   
   // ===== SCROLL FUNKTIONEN =====
   const sections = ['start', 'projekte', 'skills', 'erfahrung', 'kontakt'];
@@ -89,12 +93,16 @@
 
   // Aktualisiere isAtBottom basierend auf der aktiven Sektion
   $: isAtBottom = activeSection === 'kontakt';
+
+  const toggleCard = (cardId) => {
+    expandedCards[cardId] = !expandedCards[cardId];
+  };
 </script>
 
 <!-- ===== HEAD ELEMENTE ===== -->
 <svelte:head>
   <title>Mein Portfolio | Full-Stack Entwickler</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </svelte:head>
 
@@ -203,19 +211,388 @@
   <!-- Projekte Sektion -->
   <section id="projekte" class="section projects-section">
     <div class="content animate-slide-up">
-      <h2>Meine Projekte</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <h3>Business-App</h3>
-          <p>.NET MAUI Blazor Anwendung für MYIT Personal Networks</p>
-          <span class="tag">C#</span>
-          <span class="tag">.NET</span>
+      <h2>Berufserfahrungen</h2>
+      
+      <!-- Berufserfahrung -->
+      <div class="experience-cards">
+        <div class="project-card gradient-card">
+          <div class="card-header clickable" 
+               on:click={() => toggleCard('myit')} 
+               on:keydown={(e) => e.key === 'Enter' && toggleCard('myit')} 
+               role="button" 
+               tabindex="0">
+            <div class="header-content">
+              <div class="header-main">
+                <h3>Sentialnet Personal Networks GmbH</h3>
+                <p class="subtitle">Business Network App</p>
+                <p class="location">Versmold, Nordrhein-Westfalen</p>
+                <span class="date">06/2023 – 01/2025 · Werkstudent</span>
+              </div>
+              <div class="header-icon">
+                <i class="fas fa-chevron-{expandedCards.myit ? 'up' : 'down'}"></i>
+              </div>
+            </div>
+            <div class="tech-stack">
+              <span class="tech-tag"><i class="fab fa-microsoft"></i> .NET MAUI</span>
+              <span class="tech-tag"><i class="fab fa-microsoft"></i> Blazor</span>
+              <span class="tech-tag"><i class="fas fa-code"></i> C#</span>
+              <span class="tech-tag"><i class="fas fa-database"></i> SQL Server</span>
+              <span class="tech-tag"><i class="fas fa-layer-group"></i> MVVM</span>
+            </div>
+          </div>
+
+          <div class="card-content" class:expanded={expandedCards.myit}>
+            <div class="project-overview">
+              <p>Entwicklung einer umfassenden Business-Netzwerk-Plattform für interne Kommunikation und Prozessmanagement. Die Anwendung ermöglicht Mitarbeitern den sicheren Austausch von Dokumenten, die Koordination von Projekten und die Verwaltung interner Abläufe.</p>
+            </div>
+
+            <div class="features-list">
+              <div class="feature-group">
+                <h5>Hauptverantwortlichkeiten:</h5>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Entwicklung der Cross-Platform App für Mobile, Desktop und Web</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Implementierung der MVVM-Architektur und Clean Code Prinzipien</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Integration von REST-APIs und Backend-Services</span>
+                </div>
+              </div>
+
+              <div class="feature-group">
+                <h5>Technische Highlights:</h5>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Entwicklung wiederverwendbarer UI-Komponenten mit Blazor</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Implementierung von Real-time Updates via SignalR</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Optimierung der Datenbankabfragen und Caching-Strategien</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="achievements">
+              <h5>Erfolge & Metriken:</h5>
+              <div class="metrics-grid">
+                <div class="metric">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <div class="metric-content">
+                    <span class="metric-title">Performance</span>
+                    <span class="metric-value">+35% Steigerung</span>
+                    <span class="metric-detail">durch Caching & Optimierung</span>
+                  </div>
+                </div>
+                <div class="metric">
+                  <i class="fas fa-users"></i>
+                  <div class="metric-content">
+                    <span class="metric-title">Nutzerbasis</span>
+                    <span class="metric-value">50+ aktive Nutzer</span>
+                    <span class="metric-detail">tägliche Nutzung</span>
+                  </div>
+                </div>
+                <div class="metric">
+                  <i class="fas fa-code-branch"></i>
+                  <div class="metric-content">
+                    <span class="metric-title">Entwicklung</span>
+                    <span class="metric-value">100+ PRs</span>
+                    <span class="metric-detail">erfolgreich deployed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="project-card gradient-card">
+          <div class="card-header clickable" 
+               on:click={() => toggleCard('me2be')} 
+               on:keydown={(e) => e.key === 'Enter' && toggleCard('me2be')} 
+               role="button" 
+               tabindex="0">
+            <div class="header-content">
+              <div class="header-main">
+                <h3>ME2BE Medien GmbH</h3>
+                <p class="subtitle">Schulplattform</p>
+                <p class="location">Sehestedt, Schleswig-Holstein</p>
+                <span class="date">10/2021 – 03/2022 · Hybrid</span>
+              </div>
+              <div class="header-icon">
+                <i class="fas fa-chevron-{expandedCards.me2be ? 'up' : 'down'}"></i>
+              </div>
+            </div>
+            <div class="tech-stack">
+              <span class="tech-tag"><i class="fab fa-laravel"></i> PHP</span>
+              <span class="tech-tag"><i class="fab fa-js"></i> JavaScript</span>
+              <span class="tech-tag"><i class="fab fa-wordpress"></i> WordPress</span>
+              <span class="tech-tag"><i class="fab fa-html5"></i> HTML/CSS</span>
+              <span class="tech-tag"><i class="fas fa-database"></i> Redaktion und Veröffentlichung von Inhalten</span>
+            </div>
+          </div>
+
+          <div class="card-content" class:expanded={expandedCards.me2be}>
+            <div class="project-overview">
+              <p>Entwicklung und Betreuung einer innovativen Bildungsplattform für die digitale Berufsorientierung. Das System unterstützt über 60 Schulen bei der Verwaltung und Durchführung von Berufsorientierungsmaßnahmen und verbindet Schüler mit potenziellen Arbeitgebern.</p>
+            </div>
+
+            <div class="features-list">
+              <div class="feature-group">
+                <h5>Kernaufgaben:</h5>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Frontend-Entwicklung mit Fokus auf Responsive Design</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>WordPress-Theme Entwicklung und Customizing</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Integration von CMS-Funktionen und Content-Management</span>
+                </div>
+              </div>
+
+              <div class="feature-group">
+                <h5>Projektbeiträge:</h5>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Entwicklung einer internen Wissensdatenbank</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Implementierung von Schnittstellen für Schulportale</span>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-check"></i>
+                  <span>Optimierung der Benutzerführung für Bildungszielgruppen</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="achievements">
+              <h5 class="section-subtitle">Highlights & Ergebnisse:</h5>
+              <div class="achievement-grid">
+                <div class="achievement-card">
+                  <div class="achievement-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <span class="achievement-title">Nutzerreichweite</span>
+                    <span class="achievement-value">60+ Schulen</span>
+                    <span class="achievement-detail">Erfolgreiche Integration und aktive Nutzung</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon">
+                    <i class="fas fa-paint-brush"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <span class="achievement-title">UI/UX-Optimierung</span>
+                    <span class="achievement-value">+40% Engagement</span>
+                    <span class="achievement-detail">Verbesserte Nutzererfahrung für Schüler und Lehrer</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon">
+                    <i class="fas fa-book"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <span class="achievement-title">Wissensdatenbank</span>
+                    <span class="achievement-value">200+ Artikel</span>
+                    <span class="achievement-detail">Umfassende Dokumentation und Tutorials</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon">
+                    <i class="fas fa-tasks"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <span class="achievement-title">System-Migration</span>
+                    <span class="achievement-value">100% Erfolg</span>
+                    <span class="achievement-detail">Reibungslose CMS-Migration und Wartung</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Weitere Projekte</h3>
+      
+      <div class="projects-grid">
+        <!-- Spieleentwicklung -->
         <div class="project-card">
-          <h3>DIGI:BO Plattform</h3>
-          <p>Digitale Berufsorientierung für Schulen</p>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Sass</span>
+          <div class="card-header">
+            <div class="header-title">
+              <h4>Spieleentwicklung</h4>
+              <i class="fas fa-gamepad"></i>
+            </div>
+          </div>
+          <div class="card-content visible">
+            <div class="tech-stack">
+              <span class="tech-tag"><i class="fab fa-java"></i> Java</span>
+              <span class="tech-tag"><i class="fab fa-unity"></i> Unity</span>
+              <span class="tech-tag"><i class="fas fa-code"></i> C#</span>
+              <span class="tech-tag"><i class="fas fa-code"></i> Elm</span>
+            </div>
+            <div class="project-overview">
+              <p>Entwicklung verschiedener Spiele zur Vertiefung von Programmierkonzepten und Spielelogik. Von klassischen Brettspielen bis hin zu 3D-Anwendungen.</p>
+            </div>
+            <div class="project-details">
+              <div class="project-item">
+                <h5>XO-Game & Schach</h5>
+                <p>Java-basierte Implementierung mit Fokus auf OOP-Prinzipien und KI-Algorithmen</p>
+                <ul>
+                  <li>Minimax-Algorithmus für KI-Gegner</li>
+                  <li>Modulares Design mit Factory Pattern</li>
+                  <li>Unit Tests für Spielregeln</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>RollingBall 3D</h5>
+                <p>Unity-Spiel mit C# für physikbasierte Spielmechaniken</p>
+                <ul>
+                  <li>3D-Physik und Kollisionserkennung</li>
+                  <li>Level-Design und Gameplay-Balancing</li>
+                  <li>UI-System für Score und Menüs</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>Snake-Game (Elm)</h5>
+                <p>Funktionale Implementierung mit Elm</p>
+                <ul>
+                  <li>Reaktive UI mit Elm Architecture</li>
+                  <li>Zustandsmanagement mit Pure Functions</li>
+                  <li>Performance-Optimierung</li>
+                </ul>
+              </div>
+            </div>
+            <div class="key-features">
+              <span class="key-feature">OOP Prinzipien</span>
+              <span class="key-feature">Game Design</span>
+              <span class="key-feature">Collision Detection</span>
+              <span class="key-feature">AI Implementation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Web & Mobile Apps -->
+        <div class="project-card">
+          <div class="card-header">
+            <div class="header-title">
+              <h4>Web & Mobile Apps</h4>
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+          </div>
+          <div class="card-content visible">
+            <div class="tech-stack">
+              <span class="tech-tag"><i class="fab fa-microsoft"></i> .NET MAUI</span>
+              <span class="tech-tag"><i class="fab fa-laravel"></i> Laravel</span>
+              <span class="tech-tag"><i class="fab fa-android"></i> Kotlin</span>
+              <span class="tech-tag"><i class="fas fa-database"></i> SQLite</span>
+            </div>
+            <div class="project-overview">
+              <p>Entwicklung moderner Cross-Platform Anwendungen mit Fokus auf native Features und intuitive Benutzeroberflächen.</p>
+            </div>
+            <div class="project-details">
+              <div class="project-item">
+                <h5>FlashCards App</h5>
+                <p>.NET MAUI Anwendung mit MVVM-Pattern</p>
+                <ul>
+                  <li>Datenbindung und Commands</li>
+                  <li>SQLite-Datenbankintegration</li>
+                  <li>Responsive UI für alle Plattformen</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>StrandKorb-System</h5>
+                <p>Kotlin-basierte Verwaltungsplattform</p>
+                <ul>
+                  <li>RESTful API Integration</li>
+                  <li>Offline-First Konzept</li>
+                  <li>Material Design UI</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>Time Tracking App</h5>
+                <p>Elm-basierte Webanwendung</p>
+                <ul>
+                  <li>Automatisierte Timeline-UI</li>
+                  <li>Datenvisualisierung</li>
+                  <li>Export-Funktionen</li>
+                </ul>
+              </div>
+            </div>
+            <div class="key-features">
+              <span class="key-feature">MVVM Pattern</span>
+              <span class="key-feature">Clean Architecture</span>
+              <span class="key-feature">Native APIs</span>
+              <span class="key-feature">Offline First</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Funktionale Projekte -->
+        <div class="project-card">
+          <div class="card-header">
+            <div class="header-title">
+              <h4>Funktionale Projekte</h4>
+              <i class="fas fa-code"></i>
+            </div>
+          </div>
+          <div class="card-content visible">
+            <div class="tech-stack">
+              <span class="tech-tag"><i class="fas fa-code"></i> Elm</span>
+              <span class="tech-tag"><i class="fas fa-code"></i> Haskell</span>
+            </div>
+            <div class="project-overview">
+              <p>Exploration funktionaler Programmierkonzepte durch praktische Anwendungen mit Fokus auf Typsicherheit und reaktive UI.</p>
+            </div>
+            <div class="project-details">
+              <div class="project-item">
+                <h5>Time Tracking App</h5>
+                <p>Elm-basierte Anwendung mit automatischer Timeline</p>
+                <ul>
+                  <li>Reaktive UI-Komponenten</li>
+                  <li>Zustandsmanagement mit Elm Architecture</li>
+                  <li>Typsichere Datenverarbeitung</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>Snake-Game</h5>
+                <p>Funktionale Implementierung in Elm</p>
+                <ul>
+                  <li>Pure Functions für Spiel-Logik</li>
+                  <li>Immutable Data Structures</li>
+                  <li>Event-driven Architecture</li>
+                </ul>
+              </div>
+              <div class="project-item">
+                <h5>Haskell Projekte</h5>
+                <p>Algorithmen und Datenstrukturen</p>
+                <ul>
+                  <li>Funktionale Algorithmen</li>
+                  <li>Monaden und Type Classes</li>
+                  <li>Pattern Matching</li>
+                </ul>
+              </div>
+            </div>
+            <div class="key-features">
+              <span class="key-feature">Pure Functions</span>
+              <span class="key-feature">Type Safety</span>
+              <span class="key-feature">Reactive UI</span>
+              <span class="key-feature">Immutable Data</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -454,19 +831,12 @@
     --light: #f8f9fa;
     --gray: #6c757d;
     --transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
-    --section-bg-projects: #fff5f0;
-    --section-bg-skills: #f0fff4;
-    --section-bg-experience: #f5f0ff;
-    --section-bg-contact: #fff0f5;
+    --text-primary: #1a365d;
+    --text-secondary: #2d4a6d;
+    --text-accent: #4cc9f0;
   }
 
   /* ===== GLOBALE STYLES ===== */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   :global(body) {
     font-family: "Special Gothic Expanded One", sans-serif;
     color: var(--dark);
@@ -629,106 +999,350 @@
 
   .projects-section {
     background: var(--section-bg-projects);
+    padding: 4rem 1rem;
   }
 
-  .projects-section::before {
-    background: radial-gradient(circle at center, #ff6b6b 0%, transparent 70%);
-  }
-
-  .skills-section {
-    background: var(--section-bg-skills);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-  }
-
-  .skills-section::before {
-    background: radial-gradient(circle at center, #4cc9f0 0%, transparent 70%);
-  }
-
-  .experience-section {
-    background: var(--section-bg-experience);
-  }
-
-  .experience-section::before {
-    background: radial-gradient(circle at center, #9d4edd 0%, transparent 70%);
-  }
-
-  .contact-section {
-    background: var(--section-bg-contact);
-  }
-
-  .contact-section::before {
-    background: radial-gradient(circle at center, #ff6b6b 0%, transparent 70%);
-  }
-
-  .section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    opacity: 0.1;
-  }
-
-  .content {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-  }
-
-  /* ===== STARTSEKTION STYLES ===== */
-  .start-section {
-    position: relative;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: white;
+  .projects-section h2 {
     text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary);
+  }
+
+  .section-title {
+    color: var(--primary);
+    margin: 3rem 0 2rem;
+    font-size: 1.8rem;
+    position: relative;
+  }
+
+  .experience-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 0 auto 3rem;
+    max-width: 800px;
+    width: 90%;
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .project-card {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(67, 97, 238, 0.1);
   }
 
-  .hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.15);
   }
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
+  .card-content {
+    padding: 1.5rem;
+    background: white;
+    height: auto;
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
   }
 
-  .pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
-      linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
-    background-size: 60px 60px;
-    z-index: 2;
-    opacity: 0.1;
+  .card-header {
+    background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .card-header.clickable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .card-header.clickable:hover {
+    background: linear-gradient(135deg, #3a56d4 0%, #41b9e0 100%);
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .header-main {
+    flex: 1;
+  }
+
+  .header-main h3 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .location {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .date {
+    color: var(--dark);
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 400;
+  }
+
+  .header-icon {
+    font-size: 1.2rem;
+    color: white;
+    transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tech-tag {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tech-tag:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .tech-tag i {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+  }
+
+  .project-overview {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .project-overview p {
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .features-list {
+    padding: 0 1rem;
+  }
+
+  .feature-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-group h5 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .feature-item i {
+    color: var(--text-accent);
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+  }
+
+  .feature-item span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .achievements {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(76, 201, 240, 0.2);
+  }
+
+  .achievements h5 {
+    color: var(--text-primary);
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .metric {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .metric i {
+    color: var(--text-accent);
+  }
+
+  .metric-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .metric-value {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .metric-detail {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .achievement-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .achievement-icon {
+    background: rgba(76, 201, 240, 0.1);
+    color: var(--text-accent);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .achievement-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .achievement-value {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .achievement-detail {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .experience-cards {
+      width: 95%;
+    }
+    
+    .metrics-grid,
+    .achievement-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .card-header {
+      padding: 1.2rem;
+    }
+
+    .header-main h3 {
+      font-size: 1.2rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+
+    .tech-stack {
+      margin-top: 0.8rem;
+    }
+
+    .tech-tag {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .feature-group h5 {
+      font-size: 0.95rem;
+    }
+
+    .feature-item span {
+      font-size: 0.9rem;
+    }
   }
 
   .hero-content {
@@ -879,47 +1493,6 @@
     text-align: center;
   }
 
-  /* ===== PROJEKTE STYLES ===== */
-  .projects-section {
-    background: var(--light);
-  }
-
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .project-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: var(--transition);
-  }
-
-  .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  }
-
-  .project-card h3 {
-    margin-bottom: 0.5rem;
-    color: var(--primary);
-  }
-
-  .tag {
-    display: inline-block;
-    background: var(--primary-light);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    margin-right: 0.5rem;
-    margin-top: 0.5rem;
-  }
-
   /* ===== SKILLS STYLES ===== */
   .skills-container {
     display: grid;
@@ -1011,8 +1584,7 @@
     }
 
     .skill-category {
-      padding: 1rem;
-      margin-bottom: 0;
+      padding: 1.5rem;
     }
 
     .skill-category h3 {
@@ -1025,13 +1597,24 @@
     }
 
     .skill-category li {
-      padding: 0.4rem 0.6rem;
-      min-height: 32px;
+      padding: 0.6rem;
     }
 
-    .skill-category li span {
-      font-size: 0.85rem;
-      line-height: 1.2;
+    .skill-category li i {
+      font-size: 1.2rem;
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .start-section .content {
+      padding: 0;
+    }
+
+    .svelte-icon {
+      width: 20px;
+      height: 20px;
     }
   }
 
@@ -1063,6 +1646,7 @@
   .fa-git { color: #F05032; }
   .fa-database { color: #00758F; }
   .fa-code { color: #4361EE; }
+
   .fa-cube { color: #6B46C1; }
   .fa-broom { color: #4299E1; }
   .fa-project-diagram { color: #48BB78; }
@@ -1129,7 +1713,7 @@
   }
 
   .date {
-    color: var(--gray);
+    color: var(--dark);
     font-size: 0.9rem;
     margin: 0.3rem 0;
   }
@@ -1468,5 +2052,601 @@
 
   .skill-category li:hover .svelte-icon {
     transform: scale(1.1);
+  }
+
+  .card-header{
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .date {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+
+  .tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+  }
+
+
+
+  .metric {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+
+  .metric i {
+    color: var(--primary-light);
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .card-header{
+      padding: 1rem;
+    }
+
+    .card-content {
+      padding: 0.8rem;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+
+  .project-overview {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .location {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0.2rem 0;
+  }
+
+  .achievements {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .key-features {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .key-feature {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .project-details {
+    margin: 1.5rem 0;
+  }
+
+  .project-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-item h5 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .project-item p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .project-item ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+
+  .project-item ul li {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+
+  .project-item ul li::before {
+    content: "→";
+    position: absolute;
+    left: -1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .feature-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-group h5 {
+    color: white;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .metric-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-title {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .metric-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .metric-detail {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  .achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .achievement-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .achievement-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .achievement-detail {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .project-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gradient-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #2b2d42;
+    border: 1px solid rgba(67, 97, 238, 0.1);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+    padding: 1.2rem;
+    margin: -1px;
+  }
+
+  .header-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-title h4 {
+    color: white;
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .header-title i {
+    color: white;
+    font-size: 1.4rem;
+    opacity: 0.9;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .tech-tag {
+    background: rgba(67, 97, 238, 0.1);
+    color: #4361ee;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tech-tag i {
+    color: #4361ee;
+    font-size: 0.9rem;
+  }
+
+  .project-overview {
+    background: rgba(67, 97, 238, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .project-overview p {
+    color: #2b2d42;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .project-details {
+    margin: 1.5rem 0;
+  }
+
+  .project-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-item h5 {
+    color: #4361ee;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .project-item p {
+    color: #2b2d42;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .project-item ul {
+    list-style: none;
+    padding-left: 1.2rem;
+    margin: 0.5rem 0;
+  }
+
+  .project-item ul li {
+    color: #2b2d42;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .project-item ul li::before {
+    content: "→";
+    position: absolute;
+    left: -1.2rem;
+    color: #4361ee;
+  }
+
+  .key-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .key-feature {
+    background: rgba(67, 97, 238, 0.1);
+    color: #4361ee;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+
+  .key-feature:hover {
+    background: rgba(67, 97, 238, 0.15);
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+
+  .section-subtitle {
+    color: #4361ee;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+
+  .achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .achievement-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(67, 97, 238, 0.1);
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.1);
+    border-color: rgba(67, 97, 238, 0.2);
+  }
+
+  .achievement-icon {
+    background: rgba(67, 97, 238, 0.1);
+    color: #4361ee;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .achievement-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .achievement-title {
+    color: #4361ee;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .achievement-value {
+    color: #2b2d42;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .achievement-detail {
+    color: #6c757d;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .achievement-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .achievement-card {
+      padding: 1rem;
+    }
+
+    .achievement-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    background: white;
+    height: auto;
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+  }
+
+  .card-content.visible {
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .project-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .header-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-title h4 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: white;
+  }
+
+  .header-title i {
+    font-size: 1.4rem;
+    opacity: 0.9;
+    color: white;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .tech-tag {
+    background: rgba(67, 97, 238, 0.1);
+    color: #4361ee;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .project-overview {
+    background: rgba(67, 97, 238, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .project-item h5 {
+    color: #4361ee;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .project-item p {
+    color: #2b2d42;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-item ul {
+    list-style: none;
+    padding-left: 1.2rem;
+  }
+
+  .project-item ul li {
+    color: #2b2d42;
+    margin-bottom: 0.4rem;
+    position: relative;
+  }
+
+  .project-item ul li::before {
+    content: "→";
+    position: absolute;
+    left: -1.2rem;
+    color: #4361ee;
+  }
+
+  .key-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .key-feature {
+    background: rgba(67, 97, 238, 0.1);
+    color: #4361ee;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .card-header.clickable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .card-header.clickable:hover {
+    background: linear-gradient(135deg, #3a56d4 0%, #41b9e0 100%);
+  }
+
+  .card-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    background: white;
+    padding: 0 1.5rem;
+  }
+
+  .card-content.expanded {
+    max-height: 2000px;
+    opacity: 1;
+    visibility: visible;
+    padding: 1.5rem;
+  }
+
+  .header-icon i {
+    transition: transform 0.3s ease;
+  }
+
+  .gradient-card .card-header {
+    background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+    color: white;
+  }
+
+  .gradient-card .card-content {
+    border: 1px solid rgba(67, 97, 238, 0.1);
+    border-top: none;
   }
 </style>
