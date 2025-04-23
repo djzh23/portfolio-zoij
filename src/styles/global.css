@@ -1,0 +1,11 @@
+/* Globale Styles für die gesamte Anwendung */
+
+:global(html) {
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  margin: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+} 
