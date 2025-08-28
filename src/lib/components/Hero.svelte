@@ -29,20 +29,7 @@
     }
   };
   
-  const scrollToNextSection = () => {
-    const currentIndex = sections.indexOf(activeSection);
-    let nextSection;
-    
-    if (currentIndex === sections.length - 1) {
-      nextSection = 'start';
-      isAtBottom = true;
-    } else {
-      nextSection = sections[currentIndex + 1];
-      isAtBottom = false;
-    }
-    
-    scrollToSection(nextSection);
-  };
+
   
   /**
    * Scrollt zurück zum Seitenanfang
@@ -84,12 +71,7 @@
     });
   });
 
-  const scrollToNext = () => {
-    const nextSection = document.getElementById('projekte');
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+
 
   // Aktualisiere isAtBottom basierend auf der aktiven Sektion
   $: isAtBottom = activeSection === 'kontakt';
@@ -97,12 +79,28 @@
   const toggleCard = (cardId) => {
     expandedCards[cardId] = !expandedCards[cardId];
   };
+
+  onMount(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      isAtBottom = scrollPosition + windowHeight >= documentHeight - 100;
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
 </script>
 
 <!-- ===== HEAD ELEMENTE ===== -->
 <svelte:head>
-  <title>Mein Portfolio | Full-Stack Entwickler</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+  <title>Zouhair Ijaad | Full-Stack Entwickler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </svelte:head>
 
@@ -141,7 +139,7 @@
 <!-- ===== HAUPTINHALT ===== -->
 <main>
   <!-- Startsektion -->
-  <section id="start" class="section start-section">
+  <section id="start" class="section hero-section">
     <div class="hero-background">
       <div class="overlay"></div>
       <div class="pattern"></div>
@@ -150,16 +148,22 @@
     <div class="content animate-fade">
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="glitch" data-text="Zouhair Ijaad">Sir t9awed ! 😊</h1>
+          <h1 class="glitch" data-text="Zouhair Ijaad">Zouhair Ijaad</h1>
           <p class="subtitle">Full-Stack Entwickler & IT-Spezialist</p>
           <div class="description">
             <p>8+ Jahre Erfahrung in der Entwicklung moderner Web- und Mobile-Anwendungen. Spezialisiert auf plattformübergreifende Lösungen und innovative Technologien.</p>
           </div>
           <div class="hero-buttons">
-            <button class="cta-button primary" on:click={() => scrollToSection('projekte')}>
+            <button class="cta-button primary" on:click={() => {
+              const element = document.getElementById('projekte');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}>
               Meine Projekte entdecken
             </button>
-            <button class="cta-button secondary" on:click={() => scrollToSection('kontakt')}>
+            <button class="cta-button secondary" on:click={() => {
+              const element = document.getElementById('kontakt');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}>
               Kontakt aufnehmen
             </button>
           </div>
@@ -167,7 +171,7 @@
         
         <div class="hero-stats">
           <div class="stat-item">
-            <span class="stat-number">2+</span>
+            <span class="stat-number">8+</span>
             <span class="stat-label">Jahre Erfahrung</span>
           </div>
           <div class="stat-item">
@@ -175,36 +179,13 @@
             <span class="stat-label">Projekte</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">5+</span>
+            <span class="stat-number">10+</span>
             <span class="stat-label">Technologien</span>
           </div>
         </div>
       </div>
       
-      <div class="scroll-indicator" 
-        on:click={scrollToNextSection}
-        on:keydown={(e) => e.key === 'Enter' && scrollToNextSection()}
-        role="button"
-        tabindex="0"
-        aria-label={isAtBottom ? "Nach oben scrollen" : "Weiter scrollen"}
-      >
-        <div class="scroll-text">
-          <span>{isAtBottom ? 'Nach oben' : 'Weiter'}</span>
-          <div class="arrow-container">
-            <svg 
-              class="arrow" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              style="transform: rotate({isAtBottom ? '180deg' : '0deg'})"
-            >
-              <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -782,22 +763,7 @@
     </div>
   </section>
 
-  <!-- Kontakt Sektion -->
-  <section id="kontakt" class="section contact-section">
-    <div class="content animate-fade">
-      <h2>Kontakt</h2>
-      <form class="contact-form">
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="E-Mail">
-        <textarea placeholder="Nachricht" rows="5"></textarea>
-        <button type="submit">Senden</button>
-      </form>
-      <div class="contact-info">
-        <p>📞 (+49) 0188 58 888 18 19</p>
-        <p>✉ zmar.ouga@gmail.com</p>
-      </div>
-    </div>
-  </section>
+
 </main>
 
 <!-- ===== SCROLL-TO-TOP BUTTON ===== -->
@@ -805,23 +771,12 @@
   ↑
 </button>
 
-<!-- Verbesserter Scroll Button mit unterschiedlichen Icons -->
-<button class="scroll-btn" on:click={scrollToNextSection} aria-label={isAtBottom ? "Nach oben scrollen" : "Weiter scrollen"}>
-  {#if isAtBottom}
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 19V5M5 12L12 5L19 12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  {:else}
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7 10L12 15L17 10" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  {/if}
-</button>
+
 
 <!-- ===== STYLES ===== -->
 <style>
   /* ===== IMPORTS ===== */
-  @import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
   /* ===== VARIABLEN & IMPORTS ===== */
   :root {
@@ -838,14 +793,14 @@
 
   /* ===== GLOBALE STYLES ===== */
   :global(body) {
-    font-family: "Special Gothic Expanded One", sans-serif;
+    font-family: "Poppins", sans-serif;
     color: var(--dark);
     line-height: 1.6;
     overflow-x: hidden;
   }
 
   h1, h2, h3 {
-    font-family: "Special Gothic Expanded One", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 600;
   }
 
@@ -973,8 +928,8 @@
 
   /* ===== SEKTIONS STYLES ===== */
   .section {
+    padding: 80px 20px;
     min-height: 100vh;
-    padding: 6rem 2rem 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -982,19 +937,275 @@
     overflow: hidden;
   }
 
-  .start-section {
-    position: relative;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: white;
-    text-align: center;
-    overflow: hidden;
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 
-  .start-section .content {
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+
+  .pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+  }
+
+  .content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .hero-text {
+    text-align: left;
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    animation: glitch-1 2s infinite;
+    color: #ff0000;
+    z-index: -1;
+  }
+
+  .glitch::after {
+    animation: glitch-2 2s infinite;
+    color: #00ff00;
+    z-index: -2;
+  }
+
+  @keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+  }
+
+  @keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(2px, 2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(-2px, 2px); }
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    color: #667eea;
+    margin: 0 0 1.5rem 0;
+    font-weight: 500;
+  }
+
+  .description {
+    margin-bottom: 2rem;
+  }
+
+  .description p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .cta-button.secondary {
     background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    padding: 0;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  }
+
+  .cta-button.secondary:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 2rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .stat-item:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+
+
+  .animate-fade {
+    animation: fadeIn 1s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .hero-text {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+      justify-content: center;
+    }
+
+    .hero-stats {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .stat-item {
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-stats {
+      flex-direction: column;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-button {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
   }
 
   .projects-section {
@@ -1730,42 +1941,7 @@
     border: 3px solid var(--primary-light);
   }
 
-  /* ===== KONTAKT STYLES ===== */
-  .contact-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    display: grid;
-    gap: 1rem;
-  }
 
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: inherit;
-  }
-
-  .contact-form button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 600;
-  }
-
-  .contact-form button:hover {
-    background: #3a56d4;
-  }
-
-  .contact-info {
-    text-align: center;
-    margin-top: 2rem;
-  }
 
   /* ===== SCROLL-TO-TOP BUTTON STYLES ===== */
   .scroll-top-btn {
@@ -1894,17 +2070,7 @@
       padding: 0.8rem;
     }
 
-    .scroll-btn {
-      right: 1rem;
-      bottom: 1rem;
-      width: 40px;
-      height: 40px;
-    }
 
-    .scroll-btn svg {
-      width: 18px;
-      height: 18px;
-    }
 
     .skills-container {
       grid-template-columns: 1fr;
@@ -1981,56 +2147,10 @@
       font-size: 0.8rem;
     }
 
-    .scroll-btn {
-      right: 0.8rem;
-      bottom: 0.8rem;
-      width: 36px;
-      height: 36px;
-    }
 
-    .scroll-btn svg {
-      width: 16px;
-      height: 16px;
-    }
   }
 
-  /* Verbesserter Scroll Button */
-  .scroll-btn {
-    position: fixed;
-    right: 2rem;
-    bottom: 2rem;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: rgba(67, 97, 238, 0.9); /* Primary color with transparency */
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-    transition: var(--transition);
-    z-index: 100;
-    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
-    backdrop-filter: blur(5px);
-  }
 
-  .scroll-btn:hover {
-    opacity: 1;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
-    background: rgba(67, 97, 238, 1);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .scroll-btn svg {
-    width: 20px;
-    height: 20px;
-    animation: bounce 2s infinite;
-    stroke: white;
-    stroke-width: 2.5;
-  }
 
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
