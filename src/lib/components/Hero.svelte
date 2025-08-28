@@ -150,7 +150,7 @@
     <div class="content animate-fade">
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="glitch" data-text="Zouhair Ijaad">Zouhair Ijaad</h1>
+          <h1 class="glitch" data-text="Zouhair Ijaad">Sir t9awed ! 😊</h1>
           <p class="subtitle">Full-Stack Entwickler & IT-Spezialist</p>
           <div class="description">
             <p>8+ Jahre Erfahrung in der Entwicklung moderner Web- und Mobile-Anwendungen. Spezialisiert auf plattformübergreifende Lösungen und innovative Technologien.</p>
