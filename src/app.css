@@ -11,6 +11,14 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
   --input-bg: rgba(255, 255, 255, 0.8);
   --input-border: rgba(102, 126, 234, 0.2);
+  
+  /* Additional variables for components */
+  --primary: #4361ee;
+  --primary-light: #4cc9f0;
+  --dark: #2b2d42;
+  --light: #f8f9fa;
+  --gray: #6c757d;
+  --transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ===== GLOBALE STYLES ===== */
@@ -59,9 +67,9 @@ a:hover {
   color: #764ba2;
 }
 
-/* Sections Abstand */
+/* Sections Abstand - Verbesserte Spacing */
 section {
-  padding: 120px 20px;
+  padding: 100px 20px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -69,17 +77,48 @@ section {
   background: var(--bg-primary);
   transition: background-color 0.3s ease;
   position: relative;
+  margin: 0;
 }
 
 section:not(:last-child) {
   margin-bottom: 0;
 }
 
+/* Alternating Background Colors - Fixed */
+section:nth-child(odd) {
+  background: var(--bg-primary);
+}
+
 section:nth-child(even) {
   background: var(--bg-secondary);
 }
 
-/* Container */
+/* Specific section overrides for proper alternating */
+#start {
+  background: var(--bg-primary) !important;
+}
+
+#skills {
+  background: var(--bg-secondary) !important;
+}
+
+#weitere-projekte {
+  background: var(--bg-primary) !important;
+}
+
+#technische-skills {
+  background: var(--bg-secondary) !important;
+}
+
+#projekte {
+  background: var(--bg-primary) !important;
+}
+
+#kontakt {
+  background: var(--bg-secondary) !important;
+}
+
+/* Container - Verbesserte Zentrierung */
 .container {
   max-width: 1200px;
   width: 100%;
@@ -173,10 +212,10 @@ section:nth-child(even) {
   animation: slideInRight 0.8s ease-out;
 }
 
-/* Responsive Design */
+/* Responsive Design - Verbesserte Spacing */
 @media (max-width: 768px) {
   section {
-    padding: 60px 15px;
+    padding: 80px 15px;
   }
   
   .container {
@@ -186,7 +225,7 @@ section:nth-child(even) {
 
 @media (max-width: 480px) {
   section {
-    padding: 40px 10px;
+    padding: 60px 10px;
   }
   
   .container {

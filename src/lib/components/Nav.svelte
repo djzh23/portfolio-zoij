@@ -1,11 +1,14 @@
 <script>
   import { onMount } from 'svelte';
+  import { theme, toggleTheme } from '$lib/stores/theme.js';
   
+  // ===== STATE MANAGEMENT =====
   let activeSection = 'start';
   let isMenuOpen = false;
-  let isScrolled = false;
   
-  const sections = ['start', 'skills', 'projekte', 'kontakt'];
+  // ===== SCROLL FUNKTIONEN =====
+  // Updated to match actual section order on the page
+  const sections = ['start', 'skills', 'weitere-projekte', 'technische-skills', 'projekte', 'kontakt'];
   
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -16,152 +19,158 @@
     }
   };
   
+  /**
+   * Toggle für das mobile Menü
+   */
   const toggleMenu = () => {
     isMenuOpen = !isMenuOpen;
   };
   
+  // ===== INTERSECTION OBSERVER =====
+  /**
+   * Beobachtet Sektionen und aktualisiert die aktive Navigation
+   */
   onMount(() => {
-    const handleScroll = () => {
-      // Scroll-Erkennung für Navbar-Styling
-      isScrolled = window.scrollY > 50;
-      
-      // Aktive Sektion-Erkennung
-      const scrollPosition = window.scrollY + 100;
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && scrollPosition >= section.offsetTop) {
-          activeSection = sections[i];
-          break;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          activeSection = entry.target.id;
         }
-      }
-    };
+      });
+    }, { threshold: 0.3 });
     
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    sections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
   });
 </script>
 
-<nav class="navbar" class:scrolled={isScrolled}>
+<!-- ===== NAVIGATION ===== -->
+<nav class="navbar">
   <div class="nav-container">
     <div class="logo">
       <a href="#start" on:click|preventDefault={() => scrollToSection('start')}>
-        ZI
+        <span class="logo-text">ZI</span>
       </a>
     </div>
     
     <!-- Desktop Navigation -->
     <div class="desktop-nav">
-      <a 
-        href="#start" 
-        class:active={activeSection === 'start'} 
-        on:click|preventDefault={() => scrollToSection('start')}
-      >
-        Start
+      <a href="#start" class:active={activeSection === 'start'} on:click|preventDefault={() => scrollToSection('start')}>
+        <i class="fas fa-home"></i>
+        <span>Start</span>
       </a>
-      <a 
-        href="#skills" 
-        class:active={activeSection === 'skills'} 
-        on:click|preventDefault={() => scrollToSection('skills')}
-      >
-        Skills
+      <a href="#skills" class:active={activeSection === 'skills'} on:click|preventDefault={() => scrollToSection('skills')}>
+        <i class="fas fa-chart-bar"></i>
+        <span>Skills</span>
       </a>
-      <a 
-        href="#projekte" 
-        class:active={activeSection === 'projekte'} 
-        on:click|preventDefault={() => scrollToSection('projekte')}
-      >
-        Projekte
+      <a href="#weitere-projekte" class:active={activeSection === 'weitere-projekte'} on:click|preventDefault={() => scrollToSection('weitere-projekte')}>
+        <i class="fas fa-code"></i>
+        <span>Weitere Projekte</span>
       </a>
-      <a 
-        href="#kontakt" 
-        class:active={activeSection === 'kontakt'} 
-        on:click|preventDefault={() => scrollToSection('kontakt')}
-      >
-        Kontakt
+      <a href="#technische-skills" class:active={activeSection === 'technische-skills'} on:click|preventDefault={() => scrollToSection('technische-skills')}>
+        <i class="fas fa-cogs"></i>
+        <span>Technische Skills</span>
       </a>
+      <a href="#projekte" class:active={activeSection === 'projekte'} on:click|preventDefault={() => scrollToSection('projekte')}>
+        <i class="fas fa-briefcase"></i>
+        <span>Erfahrungen</span>
+      </a>
+      <a href="#kontakt" class:active={activeSection === 'kontakt'} on:click|preventDefault={() => scrollToSection('kontakt')}>
+        <i class="fas fa-envelope"></i>
+        <span>Kontakt</span>
+      </a>
+      
+      <!-- Theme Toggle Button -->
+      <button 
+        class="theme-toggle-nav" 
+        on:click={toggleTheme}
+        aria-label="Theme wechseln"
+        title="Theme wechseln"
+      >
+        <i class="fas {$theme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>
+      </button>
     </div>
 
     <!-- Mobile Navigation Toggle -->
-    <button 
-      class="mobile-menu-toggle" 
-      on:click={toggleMenu} 
-      aria-label="Menü öffnen/schließen"
-      class:active={isMenuOpen}
-    >
+    <button class="mobile-menu-toggle" on:click={toggleMenu} aria-label="Menü öffnen/schließen">
       <span class="hamburger"></span>
     </button>
   </div>
 
   <!-- Mobile Navigation Menu -->
   <div class="mobile-nav" class:open={isMenuOpen}>
-    <a 
-      href="#start" 
-      class:active={activeSection === 'start'} 
-      on:click|preventDefault={() => scrollToSection('start')}
-    >
-      Start
+    <a href="#start" class:active={activeSection === 'start'} on:click|preventDefault={() => scrollToSection('start')}>
+      <i class="fas fa-home"></i>
+      <span>Start</span>
     </a>
-    <a 
-      href="#skills" 
-      class:active={activeSection === 'skills'} 
-      on:click|preventDefault={() => scrollToSection('skills')}
-    >
-      Skills
+    <a href="#skills" class:active={activeSection === 'skills'} on:click|preventDefault={() => scrollToSection('skills')}>
+      <i class="fas fa-chart-bar"></i>
+      <span>Skills</span>
     </a>
-    <a 
-      href="#projekte" 
-      class:active={activeSection === 'projekte'} 
-      on:click|preventDefault={() => scrollToSection('projekte')}
-    >
-      Projekte
+    <a href="#weitere-projekte" class:active={activeSection === 'weitere-projekte'} on:click|preventDefault={() => scrollToSection('weitere-projekte')}>
+      <i class="fas fa-code"></i>
+      <span>Weitere Projekte</span>
     </a>
-    <a 
-      href="#kontakt" 
-      class:active={activeSection === 'kontakt'} 
-      on:click|preventDefault={() => scrollToSection('kontakt')}
-    >
-      Kontakt
+    <a href="#technische-skills" class:active={activeSection === 'technische-skills'} on:click|preventDefault={() => scrollToSection('technische-skills')}>
+      <i class="fas fa-cogs"></i>
+      <span>Technische Skills</span>
     </a>
+    <a href="#projekte" class:active={activeSection === 'projekte'} on:click|preventDefault={() => scrollToSection('projekte')}>
+      <i class="fas fa-briefcase"></i>
+      <span>Erfahrungen</span>
+    </a>
+    <a href="#kontakt" class:active={activeSection === 'kontakt'} on:click|preventDefault={() => scrollToSection('kontakt')}>
+      <i class="fas fa-envelope"></i>
+      <span>Kontakt</span>
+    </a>
+    
+    <!-- Mobile Theme Toggle -->
+    <button 
+      class="theme-toggle-mobile" 
+      on:click={toggleTheme}
+      aria-label="Theme wechseln"
+      title="Theme wechseln"
+    >
+      <i class="fas fa-palette"></i>
+      <span>Theme wechseln</span>
+    </button>
   </div>
 </nav>
 
 <style>
+  /* ===== NAVIGATION STYLES ===== */
   .navbar {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: all 0.3s ease;
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .navbar.scrolled {
-    background: var(--bg-primary);
-    box-shadow: 0 2px 20px var(--shadow-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 1.25rem 2rem;
     height: 70px;
   }
 
   .logo a {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #667eea;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -169,47 +178,77 @@
     transition: all 0.3s ease;
   }
 
-  .logo a:hover {
+  .logo a:hover .logo-text {
     transform: scale(1.1);
   }
 
   .desktop-nav {
     display: flex;
-    gap: 2rem;
+    gap: 0.75rem;
+    align-items: center;
   }
 
-  .desktop-nav a {
-    color: var(--text-primary);
+  .navbar a {
+    color: #2b2d42;
     text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
     border-radius: 25px;
     transition: all 0.3s ease;
     position: relative;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    background: transparent;
+    font-size: 0.95rem;
   }
 
-  .desktop-nav a:hover {
+  .navbar a i {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .navbar a:hover {
     color: #667eea;
     background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
   }
 
-  .desktop-nav a.active {
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-  }
-
-  .desktop-nav a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 2px;
+  .navbar a.active {
+    color: white;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 1px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   }
 
+  .navbar a.active i {
+    opacity: 1;
+  }
+
+  /* Theme Toggle in Navigation */
+  .theme-toggle-nav {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #667eea;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+
+  .theme-toggle-nav:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: scale(1.1);
+    color: #764ba2;
+  }
+
+  /* Mobile Menu Toggle */
   .mobile-menu-toggle {
     display: none;
     background: none;
@@ -228,7 +267,7 @@
     display: block;
     width: 24px;
     height: 2px;
-    background: var(--text-primary);
+    background: #2b2d42;
     position: relative;
     transition: all 0.3s ease;
   }
@@ -237,9 +276,9 @@
   .hamburger::after {
     content: '';
     position: absolute;
-    width: 24px;
-    height: 2px;
-    background: var(--text-primary);
+    width: 100%;
+    height: 100%;
+    background: #2b2d42;
     transition: all 0.3s ease;
   }
 
@@ -251,65 +290,96 @@
     bottom: -8px;
   }
 
-  .mobile-menu-toggle.active .hamburger {
-    background: transparent;
-  }
-
-  .mobile-menu-toggle.active .hamburger::before {
-    top: 0;
-    transform: rotate(45deg);
-  }
-
-  .mobile-menu-toggle.active .hamburger::after {
-    bottom: 0;
-    transform: rotate(-45deg);
-  }
-
+  /* Mobile Navigation */
   .mobile-nav {
     display: none;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 1rem;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--bg-primary);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px var(--shadow-color);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     transform: translateY(-100%);
     opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .mobile-nav.open {
     transform: translateY(0);
     opacity: 1;
+    visibility: visible;
   }
 
   .mobile-nav a {
-    display: block;
-    padding: 1rem 2rem;
-    color: var(--text-primary);
-    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     font-weight: 500;
-    border-bottom: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    color: #2b2d42;
   }
 
   .mobile-nav a:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .mobile-nav a i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
   }
 
   .mobile-nav a:hover {
     background: rgba(102, 126, 234, 0.1);
+    transform: translateX(10px);
     color: #667eea;
   }
 
   .mobile-nav a.active {
-    background: rgba(102, 126, 234, 0.1);
-    color: #667eea;
-    border-left: 4px solid #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   }
 
+  /* Mobile Theme Toggle */
+  .theme-toggle-mobile {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #667eea;
+    font-weight: 500;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .theme-toggle-mobile:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: translateX(10px);
+    color: #764ba2;
+  }
+
+  .theme-toggle-mobile i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+  }
+
+  /* Responsive Design */
   @media (max-width: 768px) {
     .desktop-nav {
       display: none;
@@ -320,21 +390,28 @@
     }
 
     .mobile-nav {
-      display: block;
+      display: flex;
     }
 
     .nav-container {
-      padding: 0 1rem;
+      padding: 1rem;
+      height: 60px;
     }
   }
 
   @media (max-width: 480px) {
     .nav-container {
-      padding: 0 0.5rem;
+      padding: 0.75rem;
+      height: 55px;
     }
 
-    .logo a {
+    .logo-text {
       font-size: 1.5rem;
+    }
+
+    .mobile-nav a {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
     }
   }
 </style>

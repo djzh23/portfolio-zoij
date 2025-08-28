@@ -1,204 +1,203 @@
 <script>
   import { onMount } from 'svelte';
   
-  let animatedSkills = false;
-  
+  // ===== SKILLS DATA =====
   const skills = [
     { name: 'JavaScript/TypeScript', level: 90, icon: 'fab fa-js-square', color: '#f7df1e' },
     { name: 'React/React Native', level: 85, icon: 'fab fa-react', color: '#61dafb' },
-    { name: 'Node.js', level: 80, icon: 'fab fa-node-js', color: '#339933' },
-    { name: 'C#/.NET', level: 85, icon: 'fab fa-microsoft', color: '#512bd4' },
-    { name: 'SQL/Databases', level: 75, icon: 'fas fa-database', color: '#336791' },
-    { name: 'Git/GitHub', level: 90, icon: 'fab fa-github', color: '#181717' },
-    { name: 'Docker', level: 70, icon: 'fab fa-docker', color: '#2496ed' },
-    { name: 'AWS/Cloud', level: 65, icon: 'fab fa-aws', color: '#ff9900' }
+    { name: 'Node.js/Express', level: 88, icon: 'fab fa-node-js', color: '#339933' },
+    { name: 'Python/Django', level: 82, icon: 'fab fa-python', color: '#3776ab' },
+    { name: 'Vue.js/Nuxt', level: 80, icon: 'fab fa-vuejs', color: '#4fc08d' },
+    { name: 'Svelte/SvelteKit', level: 85, icon: 'fas fa-bolt', color: '#ff3e00' },
+    { name: 'PostgreSQL/MongoDB', level: 85, icon: 'fas fa-database', color: '#336791' },
+    { name: 'Docker/Kubernetes', level: 75, icon: 'fab fa-docker', color: '#2496ed' },
+    { name: 'AWS/Azure', level: 78, icon: 'fab fa-aws', color: '#ff9900' },
+    { name: 'Git/GitHub', level: 92, icon: 'fab fa-github', color: '#333333' }
   ];
-  
+
+  let animatedSkills = [];
+  let isVisible = false;
+
   onMount(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animatedSkills = true;
+          isVisible = true;
+          animateSkills();
         }
       });
     }, { threshold: 0.3 });
-    
+
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
       observer.observe(skillsSection);
     }
   });
+
+  const animateSkills = () => {
+    skills.forEach((skill, index) => {
+      setTimeout(() => {
+        animatedSkills = [...animatedSkills, skill];
+      }, index * 100);
+    });
+  };
 </script>
 
-<section id="skills" class="section skills-section">
-  <div class="content animate-slide-up">
-    <h2>Skills & Technologien</h2>
+<section id="skills" class="skills-section">
+  <div class="container">
+    <div class="skills-header">
+      <h2 class="section-title">Skills & Technologien</h2>
+      <p class="section-subtitle">Meine technischen Fähigkeiten und Erfahrungen</p>
+    </div>
     
-    <div class="skills-container">
-      <div class="skills-grid">
-        {#each skills as skill, index}
-          <div class="skill-card" style="animation-delay: {index * 0.1}s">
-            <div class="skill-header">
-              <div class="skill-icon" style="color: {skill.color}">
-                <i class="{skill.icon}"></i>
-              </div>
-              <div class="skill-info">
-                <h3>{skill.name}</h3>
-                <span class="skill-level">{skill.level}%</span>
-              </div>
+    <div class="skills-grid">
+      {#each skills as skill, index}
+        <div class="skill-card" class:animate={animatedSkills.includes(skill)}>
+          <div class="skill-header">
+            <div class="skill-icon" style="color: {skill.color}">
+              <i class={skill.icon}></i>
             </div>
-            
-            <div class="skill-bar">
-              <div class="skill-progress" 
-                   style="width: {animatedSkills ? skill.level : 0}%; background: {skill.color}">
-              </div>
+            <div class="skill-info">
+              <h3 class="skill-name">{skill.name}</h3>
+              <span class="skill-level">{skill.level}%</span>
             </div>
           </div>
-        {/each}
-      </div>
-      
-      <div class="skills-summary">
-        <div class="summary-card">
-          <h3>Full-Stack Entwicklung</h3>
-          <p>Umfassende Erfahrung in der Entwicklung von Web- und Mobile-Anwendungen mit modernen Technologien und Frameworks.</p>
-          <div class="tech-categories">
-            <div class="category">
-              <h4>Frontend</h4>
-              <div class="tech-tags">
-                <span>React</span>
-                <span>Vue.js</span>
-                <span>Angular</span>
-                <span>HTML/CSS</span>
-              </div>
-            </div>
-            <div class="category">
-              <h4>Backend</h4>
-              <div class="tech-tags">
-                <span>Node.js</span>
-                <span>.NET</span>
-                <span>Express</span>
-                <span>REST APIs</span>
-              </div>
-            </div>
-            <div class="category">
-              <h4>Mobile</h4>
-              <div class="tech-tags">
-                <span>React Native</span>
-                <span>.NET MAUI</span>
-                <span>Flutter</span>
-                <span>iOS/Android</span>
-              </div>
+          
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                style="width: {isVisible ? skill.level : 0}%; background: {skill.color}"
+              ></div>
             </div>
           </div>
         </div>
-      </div>
+      {/each}
     </div>
   </div>
 </section>
 
 <style>
-  .section {
+  .skills-section {
     padding: 80px 20px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: auto;
   }
 
-  .content {
-    max-width: 1200px;
-    width: 100%;
+  .container {
+    max-width: 1000px;
     margin: 0 auto;
   }
 
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
+  .skills-header {
     text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .skills-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 4rem;
-    align-items: start;
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0;
   }
 
   .skills-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
   }
 
   .skill-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color);
-    border-radius: 15px;
-    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.1);
     transition: all 0.3s ease;
-    animation: slideInLeft 0.6s ease-out both;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .skill-card.animate {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .skill-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow-color);
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.2);
   }
 
   .skill-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-bottom: 1rem;
   }
 
   .skill-icon {
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-secondary);
-    border-radius: 12px;
+    border-radius: 8px;
+    background: rgba(102, 126, 234, 0.1);
+    font-size: 1rem;
   }
 
   .skill-info {
     flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .skill-info h3 {
-    margin: 0 0 0.25rem 0;
-    font-size: 1.1rem;
+  .skill-name {
+    font-size: 0.95rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin: 0;
   }
 
   .skill-level {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
   }
 
-  .skill-bar {
+  .progress-container {
+    margin-top: 0.5rem;
+  }
+
+  .progress-bar {
     width: 100%;
-    height: 8px;
-    background: var(--bg-secondary);
-    border-radius: 4px;
+    height: 6px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 3px;
     overflow: hidden;
   }
 
-  .skill-progress {
+  .progress-fill {
     height: 100%;
-    border-radius: 4px;
+    border-radius: 3px;
     transition: width 1.5s ease-out;
     position: relative;
   }
 
-  .skill-progress::after {
+  .progress-fill::after {
     content: '';
     position: absolute;
     top: 0;
@@ -214,120 +213,69 @@
     100% { transform: translateX(100%); }
   }
 
-  .skills-summary {
-    position: sticky;
-    top: 100px;
-  }
-
-  .summary-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px var(--shadow-color);
-  }
-
-  .summary-card h3 {
-    margin: 0 0 1rem 0;
-    color: var(--text-primary);
-    font-size: 1.3rem;
-  }
-
-  .summary-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .tech-categories {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .category h4 {
-    margin: 0 0 0.75rem 0;
-    color: #667eea;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  .tech-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tech-tags span {
-    background: rgba(102, 126, 234, 0.1);
-    color: #667eea;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    border: 1px solid rgba(102, 126, 234, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .tech-tags span:hover {
-    background: rgba(102, 126, 234, 0.2);
-    transform: translateY(-2px);
-  }
-
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.8s ease-out;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
+  /* Responsive Design */
   @media (max-width: 768px) {
-    .skills-container {
+    .skills-section {
+      padding: 60px 15px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+    }
+
+    .skills-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1rem;
     }
-    
-    .skills-summary {
-      position: static;
+
+    .skill-card {
+      padding: 1rem;
     }
-    
-    .summary-card {
-      padding: 1.5rem;
+
+    .skill-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 0.9rem;
+    }
+
+    .skill-name {
+      font-size: 0.9rem;
+    }
+
+    .skill-level {
+      font-size: 0.8rem;
     }
   }
 
   @media (max-width: 480px) {
-    .skill-card {
-      padding: 1rem;
+    .skills-section {
+      padding: 50px 10px;
     }
-    
+
+    .section-title {
+      font-size: 1.8rem;
+    }
+
+    .skill-header {
+      gap: 0.5rem;
+    }
+
     .skill-icon {
-      font-size: 1.5rem;
-      width: 40px;
-      height: 40px;
+      width: 24px;
+      height: 24px;
+      font-size: 0.8rem;
     }
-    
-    .skill-info h3 {
-      font-size: 1rem;
+
+    .skill-name {
+      font-size: 0.85rem;
+    }
+
+    .progress-bar {
+      height: 4px;
     }
   }
 </style>

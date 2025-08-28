@@ -22,26 +22,28 @@
 <style>
   .theme-toggle {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 25px;
+    right: 25px;
     z-index: 1001;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(102, 126, 234, 0.2);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px var(--shadow-color);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 
   .theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px var(--shadow-color);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.4);
+    background: rgba(255, 255, 255, 0.98);
   }
 
   .toggle-container {
@@ -51,16 +53,52 @@
   }
 
   .toggle-icon {
-    color: var(--text-primary);
-    font-size: 1.2rem;
+    color: #667eea;
+    font-size: 1.3rem;
     transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   }
 
   .theme-toggle:hover .toggle-icon {
+    color: #764ba2;
+    transform: scale(1.1);
+  }
+
+  /* Dark theme specific styles */
+  :global([data-theme="dark"]) .theme-toggle {
+    background: rgba(30, 30, 30, 0.95);
+    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .theme-toggle:hover {
+    background: rgba(40, 40, 40, 0.98);
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+  }
+
+  :global([data-theme="dark"]) .toggle-icon {
+    color: #4cc9f0;
+  }
+
+  :global([data-theme="dark"]) .theme-toggle:hover .toggle-icon {
     color: #667eea;
   }
 
   @media (max-width: 768px) {
+    .theme-toggle {
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+    }
+    
+    .toggle-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
     .theme-toggle {
       top: 15px;
       right: 15px;
@@ -69,7 +107,7 @@
     }
     
     .toggle-icon {
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
   }
 </style>
