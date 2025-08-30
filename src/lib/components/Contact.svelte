@@ -1,26 +1,55 @@
 <script>
+  import { onMount } from 'svelte';
+  
   let formData = {
     name: '',
+    email: '',
     message: ''
   };
   
   let isSubmitting = false;
   let submitSuccess = false;
   let submitError = false;
+  let errorMessage = '';
+
+  // Netlify Forms Integration
+  onMount(() => {
+    // Netlify Forms wird automatisch erkannt, wenn das Formular die richtigen Attribute hat
+    if (typeof window !== 'undefined' && window.netlify) {
+      window.netlify.setIdentity({
+        url: window.location.origin
+      });
+    }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     isSubmitting = true;
     submitSuccess = false;
     submitError = false;
+    errorMessage = '';
 
-    // Simuliere API-Aufruf
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      submitSuccess = true;
-      formData = { name: '', message: '' };
+      // Netlify Forms - einfache Methode
+      const form = event.target;
+      const formDataObj = new FormData(form);
+      
+      const response = await fetch('/', {
+        method: 'POST',
+        body: formDataObj
+      });
+
+      if (response.ok) {
+        submitSuccess = true;
+        formData = { name: '', email: '', message: '' };
+        form.reset();
+      } else {
+        throw new Error('Netlify Forms Fehler');
+      }
     } catch (error) {
+      console.error('Form submission error:', error);
       submitError = true;
+      errorMessage = 'Es gab einen Fehler beim Senden. Bitte versuchen Sie es später erneut oder kontaktieren Sie mich direkt per Email.';
     } finally {
       isSubmitting = false;
     }
@@ -36,10 +65,17 @@
     <h2>Kontakt</h2>
     
     <div class="contact-form">
-      <form on:submit={handleSubmit}>
+      <form 
+        name="contact" 
+        method="POST" 
+        netlify
+        on:submit={handleSubmit}
+      >
+        
         <div class="form-group">
           <input 
             type="text" 
+            name="name"
             placeholder="Name"
             value={formData.name}
             on:input={(e) => handleInput('name', e.target.value)}
@@ -48,10 +84,21 @@
           />
         </div>
         
-
+        <div class="form-group">
+          <input 
+            type="email" 
+            name="email"
+            placeholder="E-Mail"
+            value={formData.email}
+            on:input={(e) => handleInput('email', e.target.value)}
+            required
+            disabled={isSubmitting}
+          />
+        </div>
         
         <div class="form-group">
           <textarea 
+            name="message"
             placeholder="Nachricht"
             rows="5"
             value={formData.message}
@@ -81,7 +128,7 @@
       {#if submitError}
         <div class="error-message">
           <i class="fas fa-exclamation-circle"></i>
-          <p>Es gab einen Fehler beim Senden Ihrer Nachricht. Bitte versuchen Sie es erneut.</p>
+          <p>{errorMessage || 'Es gab einen Fehler beim Senden Ihrer Nachricht. Bitte versuchen Sie es erneut.'}</p>
         </div>
       {/if}
       
@@ -231,6 +278,10 @@
   .contact-item i {
     font-size: 1.2rem;
     color: #667eea;
+  }
+
+  .hidden {
+    display: none;
   }
 
   .animate-slide-up {

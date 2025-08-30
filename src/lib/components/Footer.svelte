@@ -4,7 +4,7 @@
     {
       name: 'Email',
       icon: 'fas fa-envelope',
-      url: 'mailto:zouh.ijd@example.com',
+      url: 'mailto:zouh.ijd@gmail.com',
       color: '#EA4335'
     },
     {
