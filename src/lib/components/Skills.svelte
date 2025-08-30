@@ -2,17 +2,42 @@
   import { onMount } from 'svelte';
   
   // ===== SKILLS DATA =====
-  const skills = [
-    { name: 'JavaScript/TypeScript', level: 90, icon: 'fab fa-js-square', color: '#f7df1e' },
-    { name: 'React/React Native', level: 85, icon: 'fab fa-react', color: '#61dafb' },
-    { name: 'Node.js/Express', level: 88, icon: 'fab fa-node-js', color: '#339933' },
-    { name: 'Python/Django', level: 82, icon: 'fab fa-python', color: '#3776ab' },
-    { name: 'Vue.js/Nuxt', level: 80, icon: 'fab fa-vuejs', color: '#4fc08d' },
-    { name: 'Svelte/SvelteKit', level: 85, icon: 'fas fa-bolt', color: '#ff3e00' },
-    { name: 'PostgreSQL/MongoDB', level: 85, icon: 'fas fa-database', color: '#336791' },
-    { name: 'Docker/Kubernetes', level: 75, icon: 'fab fa-docker', color: '#2496ed' },
-    { name: 'AWS/Azure', level: 78, icon: 'fab fa-aws', color: '#ff9900' },
-    { name: 'Git/GitHub', level: 92, icon: 'fab fa-github', color: '#333333' }
+  const skillCategories = [
+    {
+      title: 'Backend',
+      skills: [
+        { name: 'C# / .NET Core API', level: 85, icon: '⚙️', color: '#512BD4' },
+        { name: 'PHP / Laravel', level: 82, icon: '🐘', color: '#FF2D20' },
+        { name: 'Python / Flask', level: 75, icon: '🐍', color: '#3776AB' }
+      ]
+    },
+    {
+      title: 'Frontend',
+      skills: [
+        { name: 'HTML / CSS / Bootstrap', level: 90, icon: '🌐', color: '#1572B6' },
+        { name: 'JavaScript (ES6+)', level: 85, icon: '🔺', color: '#F7DF1E' },
+        { name: 'Svelte / SvelteKit', level: 80, icon: '🟣', color: '#FF3E00' },
+        { name: '.NET Blazor / MAUI (XAML UI)', level: 75, icon: '🟦', color: '#512BD4' },
+        { name: 'Blade / Jinja Templates', level: 70, icon: '🟤', color: '#FF2D20' }
+      ]
+    },
+    {
+      title: 'Datenbanken & Tools',
+      skills: [
+        { name: 'MySQL / MS-SQL', level: 85, icon: '🗄️', color: '#4479A1' },
+        { name: 'PostgreSQL', level: 78, icon: '🐬', color: '#336791' },
+        { name: 'ORM (Entity Framework, Eloquent)', level: 80, icon: '⚙️', color: '#512BD4' }
+      ]
+    },
+    {
+      title: 'Cloud & DevOps',
+      skills: [
+        { name: 'Docker (Basics)', level: 70, icon: '🐳', color: '#2496ED' },
+        { name: 'Azure (Deployment, CI/CD)', level: 68, icon: '☁️', color: '#0078D4' },
+        { name: 'AWS (Grundlagen)', level: 65, icon: '☁️', color: '#FF9900' },
+        { name: 'Git / GitHub / GitLab', level: 90, icon: '🔄', color: '#333333' }
+      ]
+    }
   ];
 
   let animatedSkills = [];
@@ -35,10 +60,12 @@
   });
 
   const animateSkills = () => {
-    skills.forEach((skill, index) => {
-      setTimeout(() => {
-        animatedSkills = [...animatedSkills, skill];
-      }, index * 100);
+    skillCategories.forEach((category, categoryIndex) => {
+      category.skills.forEach((skill, skillIndex) => {
+        setTimeout(() => {
+          animatedSkills = [...animatedSkills, skill];
+        }, (categoryIndex * category.skills.length + skillIndex) * 100);
+      });
     });
   };
 </script>
@@ -50,26 +77,33 @@
       <p class="section-subtitle">Meine technischen Fähigkeiten und Erfahrungen</p>
     </div>
     
-    <div class="skills-grid">
-      {#each skills as skill, index}
-        <div class="skill-card" class:animate={animatedSkills.includes(skill)}>
-          <div class="skill-header">
-            <div class="skill-icon" style="color: {skill.color}">
-              <i class={skill.icon}></i>
-            </div>
-            <div class="skill-info">
-              <h3 class="skill-name">{skill.name}</h3>
-              <span class="skill-level">{skill.level}%</span>
-            </div>
-          </div>
-          
-          <div class="progress-container">
-            <div class="progress-bar">
-              <div 
-                class="progress-fill" 
-                style="width: {isVisible ? skill.level : 0}%; background: {skill.color}"
-              ></div>
-            </div>
+    <div class="skills-categories">
+      {#each skillCategories as category, categoryIndex}
+        <div class="skill-category">
+          <h3 class="category-title">{category.title}</h3>
+          <div class="skills-grid">
+            {#each category.skills as skill, skillIndex}
+              <div class="skill-card" class:animate={animatedSkills.includes(skill)}>
+                <div class="skill-header">
+                  <div class="skill-icon" style="color: {skill.color}">
+                    {skill.icon}
+                  </div>
+                  <div class="skill-info">
+                    <h4 class="skill-name">{skill.name}</h4>
+                    <span class="skill-level">{skill.level}%</span>
+                  </div>
+                </div>
+                
+                <div class="progress-container">
+                  <div class="progress-bar">
+                    <div 
+                      class="progress-fill" 
+                      style="width: {isVisible ? skill.level : 0}%; background: {skill.color}"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            {/each}
           </div>
         </div>
       {/each}
@@ -107,6 +141,25 @@
     font-size: 1.1rem;
     color: var(--text-secondary);
     margin: 0;
+  }
+
+  .skills-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .skill-category {
+    margin-bottom: 2rem;
+  }
+
+  .category-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(102, 126, 234, 0.2);
   }
 
   .skills-grid {
@@ -152,7 +205,7 @@
     justify-content: center;
     border-radius: 8px;
     background: rgba(102, 126, 234, 0.1);
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .skill-info {
@@ -227,6 +280,15 @@
       font-size: 1rem;
     }
 
+    .skills-categories {
+      gap: 2rem;
+    }
+
+    .category-title {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
     .skills-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
@@ -239,7 +301,7 @@
     .skill-icon {
       width: 28px;
       height: 28px;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
 
     .skill-name {
@@ -260,6 +322,15 @@
       font-size: 1.8rem;
     }
 
+    .skills-categories {
+      gap: 1.5rem;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
     .skill-header {
       gap: 0.5rem;
     }
@@ -267,7 +338,7 @@
     .skill-icon {
       width: 24px;
       height: 24px;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
 
     .skill-name {

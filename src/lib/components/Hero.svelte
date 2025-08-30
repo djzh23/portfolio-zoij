@@ -33,10 +33,10 @@
     <div class="content animate-fade">
       <div class="hero-content">
         <div class="hero-text">
-          <h1 class="glitch" data-text="Zouhair Ijaad">Zouhair Ijaad</h1>
-          <p class="subtitle">Full-Stack Entwickler & IT-Spezialist</p>
+          <h1 class="glitch" data-text="Junior Backend & Full-Stack Entwickler">Junior Backend & Full-Stack Entwickler</h1>
+          <p class="subtitle">Code, Kaffee & saubere Software – das ist mein Ding.</p>
           <div class="description">
-            <p>8+ Jahre Erfahrung in der Entwicklung moderner Web- und Mobile-Anwendungen. Spezialisiert auf plattformübergreifende Lösungen und innovative Technologien.</p>
+            <p>Seit über 8 Jahren bastle ich mit Leidenschaft an Software – vom Uni-Projekt über Praktika bis zu Werkstudentenjobs. Mein Fokus: robuste Backends mit .NET & Laravel, ergänzt durch moderne Frontend-Skills. Ich lerne schnell, bleibe neugierig und bringe Spaß am Coden mit.</p>
           </div>
           <div class="hero-buttons">
             <button class="cta-button primary" on:click={() => {
@@ -56,16 +56,16 @@
         
         <div class="hero-stats">
           <div class="stat-item">
-            <span class="stat-number">8+</span>
-            <span class="stat-label">Jahre Erfahrung</span>
+            <span class="stat-number">💻</span>
+            <span class="stat-label">8+ Jahre Coding-Erfahrung</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">15+</span>
-            <span class="stat-label">Projekte</span>
+            <span class="stat-number">🚀</span>
+            <span class="stat-label">5+ Praxisprojekte & Praktika</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">10+</span>
-            <span class="stat-label">Technologien</span>
+            <span class="stat-number">⚙️</span>
+            <span class="stat-label">10+ Technologien</span>
           </div>
         </div>
       </div>
