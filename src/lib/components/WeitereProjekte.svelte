@@ -276,9 +276,11 @@
 
   .nav-button.active {
     background: linear-gradient(135deg, var(--category-color) 0%, var(--category-color)dd 100%);
-    color: white;
+    color: #ffffff;
     border-color: var(--category-color);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
 
   .nav-icon {

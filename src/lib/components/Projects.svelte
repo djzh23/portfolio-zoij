@@ -19,7 +19,7 @@
   const experiences = [
     {
       id: 'myit',
-      company: 'MYIT Personal Networks GmbH',
+      company: 'Sentialnet Personal Networks GmbH',
       role: 'Werkstudent & Thesis – Entwicklung einer .NET MAUI Blazor Business-App',
       period: '06/2023 – 07/2024',
       location: 'Remote',
@@ -71,19 +71,20 @@
         'Planung kleiner Events, Dokumentation & Abstimmung im Team',
         'Impuls für Thesis-Projekt: Vereinsverwaltung digitalisieren (.NET MAUI + Laravel)',
         'Gestärkt: Empathie, Klarheit in Kommunikation, Zuverlässigkeit'
-      ],
+      ]
+      /*,
       cta: {
         type: 'certificate',
         url: '#',
         label: 'Zeugnis'
-      }
+      }*/
     },
     {
       id: 'firma3',
-      company: 'Firma-3 GmbH (Praktikum)',
+      company: 'ONP (Praktikum)',
       role: 'Praktikant – C# & Datenbanken',
       period: '04/2014 – 07/2014',
-      location: 'München',
+      location: 'Casablanca',
       color: '#F59E0B',
       badges: ['C#', 'WinForms/WPF', 'MySQL', 'Automatisierung'],
       summary: 'Unterstützung bei einer Schichtplanung- & Urlaubsworkflow-App.',
@@ -91,12 +92,13 @@
         'UI-Anpassungen, Validierungen, kleine Automationen',
         'Unterstützung in der MySQL-Verwaltung (Schemata, einfache Queries)',
         'Saubere Übergabe & Kurz-Doku'
-      ],
+      ]
+      /*,
       cta: {
         type: 'certificate',
         url: '#',
         label: 'Zeugnis'
-      }
+      }*/
     }
   ];
 

@@ -118,7 +118,6 @@
           <li>Kann Kaffee in Code umwandeln ☕</li>
           <li>Debuggt im Schlaf 💤</li>
           <li>Git commit -m "Fix stuff" ist mein Lieblings-Command 🔧</li>
-          <li>Stack Overflow ist mein zweites Zuhause 🏠</li>
         </ul>
       </div>
     </div>
