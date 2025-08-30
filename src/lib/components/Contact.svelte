@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
   
   let formData = {
     name: '',
@@ -12,47 +11,12 @@
   let submitError = false;
   let errorMessage = '';
 
-  // Netlify Forms Integration
-  onMount(() => {
-    // Netlify Forms wird automatisch erkannt, wenn das Formular die richtigen Attribute hat
-    if (typeof window !== 'undefined' && window.netlify) {
-      window.netlify.setIdentity({
-        url: window.location.origin
-      });
-    }
-  });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+
+  const handleSubmit = (event) => {
+    // Netlify Forms funktioniert automatisch ohne JavaScript
+    // Das Formular wird normal abgesendet
     isSubmitting = true;
-    submitSuccess = false;
-    submitError = false;
-    errorMessage = '';
-
-    try {
-      // Netlify Forms - einfache Methode
-      const form = event.target;
-      const formDataObj = new FormData(form);
-      
-      const response = await fetch('/', {
-        method: 'POST',
-        body: formDataObj
-      });
-
-      if (response.ok) {
-        submitSuccess = true;
-        formData = { name: '', email: '', message: '' };
-        form.reset();
-      } else {
-        throw new Error('Netlify Forms Fehler');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      submitError = true;
-      errorMessage = 'Es gab einen Fehler beim Senden. Bitte versuchen Sie es später erneut oder kontaktieren Sie mich direkt per Email.';
-    } finally {
-      isSubmitting = false;
-    }
   };
 
   const handleInput = (field, value) => {
@@ -118,19 +82,7 @@
         </button>
       </form>
       
-      {#if submitSuccess}
-        <div class="success-message">
-          <i class="fas fa-check-circle"></i>
-          <p>Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.</p>
-        </div>
-      {/if}
-      
-      {#if submitError}
-        <div class="error-message">
-          <i class="fas fa-exclamation-circle"></i>
-          <p>{errorMessage || 'Es gab einen Fehler beim Senden Ihrer Nachricht. Bitte versuchen Sie es erneut.'}</p>
-        </div>
-      {/if}
+
       
 
     </div>
