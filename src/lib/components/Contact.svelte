@@ -1,7 +1,6 @@
 <script>
   let formData = {
     name: '',
-    email: '',
     message: ''
   };
   
@@ -19,7 +18,7 @@
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       submitSuccess = true;
-      formData = { name: '', email: '', message: '' };
+      formData = { name: '', message: '' };
     } catch (error) {
       submitError = true;
     } finally {
@@ -49,16 +48,7 @@
           />
         </div>
         
-        <div class="form-group">
-          <input 
-            type="email" 
-            placeholder="E-Mail"
-            value={formData.email}
-            on:input={(e) => handleInput('email', e.target.value)}
-            required
-            disabled={isSubmitting}
-          />
-        </div>
+
         
         <div class="form-group">
           <textarea 
@@ -95,16 +85,7 @@
         </div>
       {/if}
       
-      <div class="contact-info">
-        <div class="contact-item">
-          <i class="fas fa-phone"></i>
-          <span>(+49) 0188 58 888 18 19</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-envelope"></i>
-          <span>zmar.ouga@gmail.com</span>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>

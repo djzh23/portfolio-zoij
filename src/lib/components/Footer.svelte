@@ -4,7 +4,7 @@
     {
       name: 'Email',
       icon: 'fas fa-envelope',
-      url: 'mailto:zouhair.ijaad@example.com',
+      url: 'mailto:zouh.ijd@example.com',
       color: '#EA4335'
     },
     {
@@ -16,14 +16,8 @@
     {
       name: 'GitHub',
       icon: 'fab fa-github',
-      url: 'https://github.com/zouhair-ijaad',
+      url: 'https://github.com/djzh23',
       color: '#333333'
-    },
-    {
-      name: 'Twitter',
-      icon: 'fab fa-twitter',
-      url: 'https://twitter.com/zouhair_ijaad',
-      color: '#1DA1F2'
     }
   ];
 
@@ -268,5 +262,4 @@
   .social-link:nth-child(1) { animation: socialFloat 3s ease-in-out infinite; }
   .social-link:nth-child(2) { animation: socialFloat 3s ease-in-out infinite 0.5s; }
   .social-link:nth-child(3) { animation: socialFloat 3s ease-in-out infinite 1s; }
-  .social-link:nth-child(4) { animation: socialFloat 3s ease-in-out infinite 1.5s; }
 </style>
