@@ -81,7 +81,7 @@
     {
       id: 'funktional',
       title: 'Funktionale Projekte',
-      icon: '⚡',
+      icon: 'λ',
       color: '#06B6D4',
       description: 'Erkundung funktionaler Konzepte (Elm, Haskell) mit Fokus auf reaktive UI und typsichere Architekturen.',
       techStack: ['Elm', 'Haskell', 'Functional Programming'],
@@ -142,6 +142,7 @@
             class="nav-button" 
             class:active={activeCard === category.id}
             style="--category-color: {category.color}"
+            data-category={category.id}
             on:click={() => setActiveCard(category.id)}
           >
             <span class="nav-icon">{category.icon}</span>

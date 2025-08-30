@@ -8,7 +8,7 @@
   
   // ===== SCROLL FUNKTIONEN =====
   // Updated to match actual section order on the page
-  const sections = ['start', 'skills', 'weitere-projekte', 'technische-skills', 'projekte', 'kontakt'];
+  const sections = ['start', 'skills', 'weitere-projekte', 'technische-skills', 'projekte'];
   
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -77,10 +77,7 @@
         <i class="fas fa-briefcase"></i>
         <span>Erfahrungen</span>
       </a>
-      <a href="#kontakt" class:active={activeSection === 'kontakt'} on:click|preventDefault={() => scrollToSection('kontakt')}>
-        <i class="fas fa-envelope"></i>
-        <span>Kontakt</span>
-      </a>
+
       
       <!-- Theme Toggle Button -->
       <button 
@@ -121,10 +118,7 @@
       <i class="fas fa-briefcase"></i>
       <span>Erfahrungen</span>
     </a>
-    <a href="#kontakt" class:active={activeSection === 'kontakt'} on:click|preventDefault={() => scrollToSection('kontakt')}>
-      <i class="fas fa-envelope"></i>
-      <span>Kontakt</span>
-    </a>
+
     
     <!-- Mobile Theme Toggle -->
     <button 

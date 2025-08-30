@@ -40,30 +40,43 @@
           </div>
           <div class="hero-buttons">
             <button class="cta-button primary" on:click={() => {
-              const element = document.getElementById('projekte');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
+              const element = document.getElementById('weitere-projekte');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Nach dem Scrollen den Web & Mobile Apps Tab aktivieren
+                setTimeout(() => {
+                  const webMobileButton = document.querySelector('[data-category="web-mobile"]');
+                  if (webMobileButton) {
+                    webMobileButton.click();
+                  }
+                }, 800); // Kurze Verzögerung für smooth scroll
+              }
             }}>
               Meine Projekte entdecken
             </button>
-            <button class="cta-button secondary" on:click={() => {
-              const element = document.getElementById('kontakt');
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }}>
-              Kontakt aufnehmen
-            </button>
+
           </div>
         </div>
         
         <div class="hero-stats">
-          <div class="stat-item">
+          <div class="stat-item" on:click={() => {
+            const element = document.getElementById('projekte');
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+          }}>
             <span class="stat-number">💻</span>
             <span class="stat-label">8+ Jahre Coding-Erfahrung</span>
           </div>
-          <div class="stat-item">
+          <div class="stat-item" on:click={() => {
+            const element = document.getElementById('weitere-projekte');
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+          }}>
             <span class="stat-number">🚀</span>
             <span class="stat-label">5+ Praxisprojekte & Praktika</span>
           </div>
-          <div class="stat-item">
+          <div class="stat-item" on:click={() => {
+            const element = document.getElementById('skills');
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+          }}>
             <span class="stat-number">⚙️</span>
             <span class="stat-label">10+ Technologien</span>
           </div>
@@ -273,6 +286,7 @@
     border: 1px solid var(--border-color);
     border-radius: 20px;
     transition: all 0.3s ease;
+    cursor: pointer;
   }
 
   .stat-item:hover {

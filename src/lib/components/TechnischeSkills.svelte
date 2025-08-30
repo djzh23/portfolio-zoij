@@ -39,7 +39,7 @@
         <h3>Programmierparadigmen</h3>
         <ul>
           <li>
-            <i class="fas fa-function"></i>
+            <i class="fas fa-code-branch"></i>
             <span>Funktionale Programmierung (Haskell, Elm)</span>
           </li>
           <li>
@@ -325,7 +325,7 @@
   .fa-diagram-project { color: #4299E1; }
   .fa-arrows-split-up-and-left { color: #667EEA; }
   .fa-memory { color: #ED8936; }
-  .fa-function { color: #48BB78; }
+  .fa-code-branch { color: #48BB78; }
   .fa-vial { color: #ECC94B; }
   .fa-bolt { color: #F6AD55; }
   .fa-fire { color: #FFA000; }
@@ -350,7 +350,7 @@
   .skill-category li:hover .fa-diagram-project { color: #3182CE; }
   .skill-category li:hover .fa-arrows-split-up-and-left { color: #5A67D8; }
   .skill-category li:hover .fa-memory { color: #DD6B20; }
-  .skill-category li:hover .fa-function { color: #38A169; }
+  .skill-category li:hover .fa-code-branch { color: #38A169; }
   .skill-category li:hover .fa-vial { color: #D69E2E; }
   .skill-category li:hover .fa-bolt { color: #ED8936; }
   .skill-category li:hover .fa-fire { color: #E68A00; }
@@ -442,6 +442,8 @@
       width: 20px;
       height: 20px;
     }
+
+    
   }
 
   @media (min-width: 769px) and (max-width: 1024px) {
