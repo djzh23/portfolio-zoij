@@ -251,10 +251,26 @@
     padding: 0.5rem;
     border-radius: 8px;
     transition: all 0.3s ease;
+    outline: none;
   }
 
   .mobile-menu-toggle:hover {
     background: rgba(102, 126, 234, 0.1);
+  }
+
+  .mobile-menu-toggle:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .mobile-menu-toggle:focus-visible {
+    outline: 2px solid rgba(102, 126, 234, 0.3);
+    outline-offset: 2px;
+  }
+
+  .mobile-menu-toggle:active {
+    transform: scale(0.95);
+    background: rgba(102, 126, 234, 0.15);
   }
 
   .hamburger {
