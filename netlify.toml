@@ -4,8 +4,3 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-# Form handling configuration
-[forms]
-  [forms.contact]
-    name = "contact"
